@@ -1,11 +1,12 @@
 ---
 cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--i0ViBxy6--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5kybkw3w9lqa1khc0a1p.png
 description: A ToDo App is a very beginner level app for any frontend developer. A
-  basic ToDo app has...
+    basic ToDo app has...
 id: 1031023
 published: true
-published_at: '2022-03-22T16:30:41.841Z'
-tags:
+published_at: 2022-03-22 16:30:41.841000+00:00
+slug: building-a-todo-app-in-react-51c8
+tag_list:
 - javascript
 - react
 - webdev

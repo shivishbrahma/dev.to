@@ -1,11 +1,12 @@
 ---
 cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--Oqq-ofCi--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g4vrvcah3t86ib1s8r2h.png
 description: From the list of some of the most common libraries that are heavily used
-  in a PHP framework project...
+    in a PHP framework project...
 id: 1043472
 published: true
-published_at: '2022-04-10T06:46:27.140Z'
-tags:
+published_at: 2022-04-10 06:46:27.140000+00:00
+slug: creating-a-dotenv-loader-in-php-jkl
+tag_list:
 - php
 - symfony
 - phpunit

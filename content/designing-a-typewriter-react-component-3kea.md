@@ -1,11 +1,12 @@
 ---
 cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--KwT_0VoI--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xhunqq5o76vi3gwxesvh.png
 description: We are pretty much familiar with the Typewriter effect, although we might
-  not be acquainted with a...
+    not be acquainted with a...
 id: 993602
 published: true
-published_at: '2022-02-18T19:30:57.207Z'
-tags:
+published_at: 2022-02-18 19:30:57.207000+00:00
+slug: designing-a-typewriter-react-component-3kea
+tag_list:
 - react
 - javascript
 - component

@@ -1,11 +1,12 @@
 ---
 cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--sZ0I69e6--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vptsqyr0ivfbzur7375s.png
 description: Activity Calendar has become popular after open-source platforms like
-  Github, Kaggle starting used to...
+    Github, Kaggle starting used to...
 id: 1002962
 published: true
-published_at: '2022-02-27T07:48:23.025Z'
-tags:
+published_at: 2022-02-27 07:48:23.025000+00:00
+slug: designing-an-activity-calendar-in-react-47k2
+tag_list:
 - javascript
 - react
 - component

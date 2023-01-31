@@ -1,11 +1,12 @@
 ---
 cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--2eYhiWgR--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sjzbzcmfnjwfohd2narj.png
 description: Developing a React App has always been a fascinating experience as a
-  Frontend Developer. To build...
+    Frontend Developer. To build...
 id: 1012218
 published: true
-published_at: '2022-03-06T07:33:46.411Z'
-tags:
+published_at: 2022-03-06 07:33:46.411000+00:00
+slug: deploying-react-app-in-github-pages-4jfd
+tag_list:
 - github
 - react
 - deployment
