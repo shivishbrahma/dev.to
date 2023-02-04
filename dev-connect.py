@@ -3,33 +3,68 @@ import urllib.parse
 from dotenv import load_dotenv
 from dateutil import parser
 import os
+import sys
 import requests
 import yaml
 import json
 import glob
 import re
+from argparse import ArgumentParser
 
 load_dotenv()
 
 DEV_TO_API_KEY = os.environ["DEV_TO_API_KEY"]
 API_URL = "https://dev.to/"
 
-headers = {"api-key": DEV_TO_API_KEY}
+headers = {"api-key": DEV_TO_API_KEY, "Content-Type": "application/json"}
 
 
 class DEV_Post:
     """ """
 
     def __init__(self) -> None:
-        self.__id: int = 0
-        self.__title: str = ""
-        self.__desc: str = ""
+        self.__id: int = -1
+        self.__title: str = "Sample Title"
+        self.__desc: str = "Body Content..."
         self.__cover_img: str = ""
         self.__is_published: bool = False
         self.__published_ts: datetime = datetime.now()
-        self.__slug: str = ""
-        self.__body: str = ""
+        self.__slug: str = "post-slug"
+        self.__body: str = "Body Content"
         self.__tags: list = []
+
+    def __init__(self, **kwargs) -> None:
+        def_post = {
+            "id": -1,
+            "title": "Sample Title",
+            "description": "Body Content...",
+            "cover_img":  "",
+            "published": False,
+            "published_at": datetime.utcnow(),
+            "slug" :"post-slug",
+            "body_markdown":  "Body Content",
+            "tag_list": []
+        }
+        for key, val in kwargs.items():
+            if key in ["id", "title", "description", "cover_image", "published", "published_at", "slug", "body_markdown", "tag_list"]:
+                def_post[key] = val
+        self.load_json(def_post)
+
+    @property
+    def title(self) -> str:
+        return self.__title
+
+    @property
+    def body(self) -> str:
+        return self.__body
+
+    @property
+    def tags(self) -> str:
+        return self.__tags
+
+    @property
+    def published(self) -> str:
+        return self.__tags
 
     def load_json(self, post: dict):
         self.__id = post["id"]
@@ -100,7 +135,7 @@ class DEV_Post:
 
 def pull_my_posts():
     """ """
-    url = urllib.parse.urljoin(API_URL, "/api/articles/me", allow_fragments=True)
+    url = urllib.parse.urljoin(API_URL, "/api/articles/me")
     res = requests.get(url, headers=headers)
     posts = res.json()
     for post in posts:
@@ -117,15 +152,44 @@ def publish_my_posts():
             dev_post = DEV_Post()
             dev_post.load_md(f.read())
             md_posts.append(md_posts)
-    md_posts = list(filter(lambda post: post.is_published == True))
+    md_posts = list(filter(lambda post: post.is_published))
     # Check for updates
     # Check for published
 
 
-def publish_my_post(post_name: str):
-    pass
+def publish_my_post(post: DEV_Post):
+    """
+    Parse the posts and publish & update the post
+    """
+    url = urllib.parse.urljoin(API_URL, "/api/articles")
+    data = {
+        "article": {
+            "title": post.title,
+            "body_markdown": post.body,
+            "published": post.published,
+            "tags": post.tags,
+        }
+    }
+    res = requests.post(url=url, headers=headers, data=data)
+
+
+def create_new_post(title):
+    '''
+    Create a new post template
+    '''
+    publish_my_post(DEV_Post(title=title))
+    pull_my_posts()
 
 
 if __name__ == "__main__":
-    # pull_my_posts()
+    parser = ArgumentParser()
+    parser.add_argument('--create', '-c', type=str, help="To create a new post template")
+
+    args = parser.parse_args()
+
+    if args.create:
+        create_new_post(args.create)
+        sys.exit(0)
+
     publish_my_posts()
+    # pull_my_posts()
