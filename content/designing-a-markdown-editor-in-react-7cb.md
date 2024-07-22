@@ -1,5 +1,5 @@
 ---
-cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--5fJxFgxf--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kt7jmjn0lxpbfp867imd.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fkt7jmjn0lxpbfp867imd.png
 description: Ever since the popularity of open-source libraries, Markdown has always
     been the primary text format...
 id: 1022617

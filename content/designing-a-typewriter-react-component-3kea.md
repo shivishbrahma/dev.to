@@ -1,5 +1,5 @@
 ---
-cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--KwT_0VoI--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xhunqq5o76vi3gwxesvh.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fk0euxhlzn6tr5ri7gfgv.png
 description: We are pretty much familiar with the Typewriter effect, although we might
     not be acquainted with a...
 id: 993602

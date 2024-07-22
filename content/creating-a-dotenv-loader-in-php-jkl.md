@@ -1,5 +1,5 @@
 ---
-cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--Oqq-ofCi--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g4vrvcah3t86ib1s8r2h.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fg4vrvcah3t86ib1s8r2h.png
 description: From the list of some of the most common libraries that are heavily used
     in a PHP framework project...
 id: 1043472

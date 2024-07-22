@@ -1,5 +1,5 @@
 ---
-cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--2eYhiWgR--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sjzbzcmfnjwfohd2narj.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F0mqmsf3owvhv3fea72wf.png
 description: Developing a React App has always been a fascinating experience as a
     Frontend Developer. To build...
 id: 1012218

@@ -1,5 +1,5 @@
 ---
-cover_image: https://res.cloudinary.com/practicaldev/image/fetch/s--i0ViBxy6--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5kybkw3w9lqa1khc0a1p.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F5kybkw3w9lqa1khc0a1p.png
 description: A ToDo App is a very beginner level app for any frontend developer. A
     basic ToDo app has...
 id: 1031023
