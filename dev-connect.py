@@ -15,20 +15,14 @@ from argparse import ArgumentParser
 
 load_dotenv()
 
-API_URL = "https://dev.to/"
 
-headers = {
-    "api-key": os.environ.get("DEV_TO_API_KEY"),
-    "Content-Type": "application/json",
-}
+def null_if(value, def_val):
+    if value is None:
+        return def_val
+    return value
 
-logger = logging.getLogger('dev_connect')
-logger.setLevel(os.environ.get("LOG_LEVEL"))
 
-# Add color to the logging output
-coloredlogs.install(level='DEBUG', logger=logger)
-
-class DEV_Post:
+class DEVPost:
     """ """
 
     def __init__(self, **kwargs) -> None:
@@ -37,6 +31,7 @@ class DEV_Post:
         self.__desc: str = "Body Content..."
         self.__cover_img: str = ""
         self.__is_published: bool = False
+        self.__is_updated: bool = False
         self.__published_ts: datetime = datetime.now()
         self.__slug: str = "post-slug"
         self.__body: str = "Body Content"
@@ -79,11 +74,15 @@ class DEV_Post:
 
     @property
     def tags(self) -> str:
-        return self.__tags
+        return str(self.__tags)
 
     @property
     def published(self) -> str:
-        return self.__is_published
+        return str(self.__is_published)
+
+    @property
+    def updated(self) -> str:
+        return str(self.__is_updated)
 
     @property
     def published_ts(self):
@@ -94,7 +93,8 @@ class DEV_Post:
         self.__title = post["title"]
         self.__desc = post["description"]
         self.__cover_img = post["cover_image"]
-        self.__is_published = post["published"]
+        self.__is_published = null_if(post["published"], False)
+        # self.__is_updated = null_if(post["updated"], False)
         if post["published_at"] is not None:
             self.__published_ts = dateutil.parser.parse(str(post["published_at"]))
         self.__slug = post["slug"]
@@ -111,13 +111,14 @@ class DEV_Post:
             self.__title = post_yml["title"]
             self.__desc = post_yml["description"]
             self.__cover_img = post_yml["cover_image"]
-            self.__is_published = post_yml["published"]
+            self.__is_published = null_if(post_yml["published"], False)
+            # self.__is_updated = null_if(post_yml["updated"], False)
             self.__published_ts = post_yml["published_at"]
             self.__slug = post_yml["slug"]
             self.__tags = post_yml["tag_list"]
         if len(md_content) > 0:
             self.__body = md_content[0].strip()
-        logger.debug(self.__body)
+        # logger.debug(self.__body)
 
     def save_md(self, dir="content"):
         try:
@@ -161,58 +162,80 @@ class DEV_Post:
             indent=4,
         )
 
-    def unpublish(self) -> str:
+    def unpublish(self) -> bool:
         if not self.__is_published:
             url = urllib.parse.urljoin(API_URL, f"/api/articles/{self.__id}/unpublish")
             res = requests.put(url=url, headers=headers)
             if res.status_code == 204:
                 logger.info("Article successfully unpublished!")
+                return True
             else:
                 logger.error(f"Error unpublishing article: {res.json()}")
+                return False
         else:
             logger.error("Article is not unpublished! Try with different article")
+            return False
 
-    def publish(self) -> str:
+    def publish(self) -> bool:
         if self.__is_published:
             url = urllib.parse.urljoin(API_URL, f"/api/articles/{self.__id}/unpublish")
         else:
             logger.error("Article is not published! Try with different article")
+        return True
+
+    @staticmethod
+    def load_post(id, filename):
+        return DEVPost()
 
 
 def pull_my_posts():
     """ """
     url = urllib.parse.urljoin(API_URL, "/api/articles/me/all")
     res = requests.get(url, headers=headers)
-    posts_dict = []
-    if os.path.exists("posts.json"):
-        with open("posts.json", "r", encoding="utf-8") as f:
+    post_meta_list = []
+    if os.path.exists(POSTS_METADATA):
+        with open(POSTS_METADATA, "r", encoding="utf-8") as f:
             posts = json.load(f)
             for post in posts:
-                posts_dict.append(json.dumps(post))
+                post_meta_list.append(json.dumps(post))
 
     if res.status_code == 200:
         posts = res.json()
         posts_new = []
         for post in posts:
-            dev_post = DEV_Post()
+            dev_post = DEVPost()
             dev_post.load_json(post=post)
             dev_post.save_md()
             post_meta = {"id": post["id"], "filename": post["slug"] + ".md"}
             posts_new.append(json.dumps(post_meta))
 
-        posts_dict.extend(posts_new)
-        posts_dict = list(set(posts_dict))
+        post_meta_list.extend(posts_new)
+        post_meta_list = list(set(post_meta_list))
 
-        for i, post in enumerate(posts_dict):
-            posts_dict[i] = json.loads(post)
+        for i, post in enumerate(post_meta_list):
+            post_meta_list[i] = json.loads(post)
 
+        # Sort the posts by post_id
+        post_meta_list = sorted(post_meta_list, key=lambda post: post["id"])
 
-        with open("posts.json", "w", encoding="utf-8") as f:
-            json.dump(posts_dict, f, indent=4)
+        with open(POSTS_METADATA, "w", encoding="utf-8") as f:
+            json.dump(post_meta_list, f, indent=4)
 
         logger.info("Articles pulled successfully!")
     else:
         logger.error(f"Error pulling articles: {res.json()}")
+
+
+def load_posts():
+    posts_list = []
+    post_meta_list = []
+
+    if os.path.exists(POSTS_METADATA):
+        with open(POSTS_METADATA, "r", encoding="utf-8") as f:
+            posts = json.load(f)
+            for post_meta in posts:
+                post_meta_list.append(json.dumps(post_meta))
+                posts_list.append(DEVPost.load_post(**post_meta))
 
 
 def publish_my_posts():
@@ -220,7 +243,7 @@ def publish_my_posts():
     md_posts = []
     for md_file in list(glob.glob(os.path.join("content", "*.md"))):
         with open(md_file, "r", encoding="utf-8") as f:
-            dev_post = DEV_Post()
+            dev_post = DEVPost()
             dev_post.load_md(f.read())
             md_posts.append(dev_post)
     md_posts = list(filter(lambda post: post.published, md_posts))
@@ -228,7 +251,7 @@ def publish_my_posts():
     # Check for published
 
 
-def publish_my_post(post: DEV_Post):
+def publish_my_post(post: DEVPost):
     """
     Parse the posts and publish & update the post
     """
@@ -254,16 +277,17 @@ def create_new_post(title):
     """
     Create a new post template
     """
-    publish_my_post(DEV_Post(title=title))
+    publish_my_post(DEVPost(title=title))
     # pull_my_posts()
 
 
-if __name__ == "__main__":
+def main():
     arg_parser = ArgumentParser()
     arg_parser.add_argument(
         "--create", "-c", type=str, help="Create a new post template"
     )
     arg_parser.add_argument("--pull", action="store_true", help="Pull posts")
+    arg_parser.add_argument("--update", action="store_true", help="Update the post")
 
     args = arg_parser.parse_args()
 
@@ -274,4 +298,22 @@ if __name__ == "__main__":
     if args.pull:
         pull_my_posts()
 
-    publish_my_posts()
+    # publish_my_posts()
+
+
+if __name__ == "__main__":
+    API_URL = "https://dev.to/"
+    POSTS_METADATA = "posts.json"
+
+    headers = {
+        "api-key": os.environ.get("DEV_TO_API_KEY"),
+        "Content-Type": "application/json",
+    }
+
+    logger = logging.getLogger("dev_connect")
+    logger.setLevel(os.environ.get("LOG_LEVEL", "INFO"))
+
+    # Add color to the logging output
+    coloredlogs.install(level="DEBUG", logger=logger)
+
+    main()
