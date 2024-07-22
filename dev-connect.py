@@ -182,7 +182,7 @@ class DEVPost:
         else:
             logger.error("Article is not published! Try with different article")
         return True
-    
+
     @staticmethod
     def load_post(id, filename):
         return DEVPost()
@@ -214,6 +214,9 @@ def pull_my_posts():
 
         for i, post in enumerate(post_meta_list):
             post_meta_list[i] = json.loads(post)
+
+        # Sort the posts by post_id
+        post_meta_list = sorted(post_meta_list, key=lambda post: post["id"])
 
         with open(POSTS_METADATA, "w", encoding="utf-8") as f:
             json.dump(post_meta_list, f, indent=4)
