@@ -34,7 +34,7 @@ class DEVPost:
         self.__cover_img: str = ""
         self.__is_published: bool = False
         self.__is_updated: bool = False
-        self.__published_ts: datetime = datetime.datetime.now(tz=datetime.timezone.utc)
+        self.__published_ts: datetime = None
         self.__slug: str = "post-slug"
         self.__body: str = "Body Content"
         self.__tags: list = []
@@ -48,7 +48,7 @@ class DEVPost:
             "description": "Body Content...",
             "cover_image": "",
             "published": False,
-            "published_at": datetime.datetime.now(tz=datetime.timezone.utc),
+            "published_at": None,
             "slug": "post-slug",
             "body_markdown": "Body Content",
             "tag_list": [],
@@ -105,6 +105,8 @@ class DEVPost:
             self.__published_ts = dateutil.parser.parse(str(post["published_at"]))
         if "series" in post.keys() and post["series"] is not None:
             self.__series = post["series"]
+        if "collection_id" in post.keys() and post["collection_id"] is not None:
+            self.__series = post["collection_id"]
         if "created_at" in post.keys() and post["created_at"] is not None:
             self.__created_ts = dateutil.parser.parse(str(post["created_at"]))
         if "edited_at" in post.keys() and post["edited_at"] is not None:
@@ -133,9 +135,8 @@ class DEVPost:
 
     def save_md(self, dir="content"):
         try:
-            with open(
-                os.path.join(dir, self.__slug) + ".md", "w+", encoding="utf-8"
-            ) as f:
+            file_path = os.path.join(dir, self.__slug) + ".md"
+            with open(file_path, "w+", encoding="utf-8") as f:
                 f.write("---\n")
                 yaml_data = {
                     "id": self.__id,
@@ -160,6 +161,7 @@ class DEVPost:
                 )
                 f.write("---\n")
                 f.write(self.__body)
+                logger.info(f"Article successfully saved to {file_path}!")
             return True
         except Exception as e:
             print(e)
@@ -222,7 +224,10 @@ class DEVPost:
             return False
 
     @staticmethod
-    def load_post(id, filename=None):
+    def load_post_local(id, filename=None):
+        """
+        Load post from local file
+        """
         md_filename = filename
         if filename is None:
             with open(POSTS_METADATA, "r", encoding="utf-8") as f:
@@ -231,11 +236,28 @@ class DEVPost:
                 if len(post) > 0:
                     md_filename = post[0]["filename"]
 
-        post = DEVPost()
+        post = DEVPost(id=id)
         post.load_md(
             open(os.path.join(CONTENT_DIR, md_filename), "r", encoding="utf-8").read()
         )
         return post
+
+    @staticmethod
+    def load_post_online(id):
+        """
+        Load post from dev.to
+        """
+        url = urllib.parse.urljoin(API_URL, f"/api/articles/{id}")
+        res = requests.get(url, headers=headers)
+        if res.status_code == 200:
+            post = DEVPost(id=id)
+            res_json = res.json()
+            res_json["published"] = True
+            post.load_json(res_json)
+            return post
+        else:
+            logger.error(f"Error loading article: {res.json()}")
+            return None
 
 
 def pull_my_posts():
@@ -255,10 +277,13 @@ def pull_my_posts():
         posts = res.json()
         posts_new = []
         for post in posts:
-            dev_post = DEVPost()
-            dev_post.load_json(post=post)
-            dev_post.save_md()
             post_meta = {"id": post["id"], "filename": post["slug"] + ".md"}
+            if post["published"]:
+                dev_post = DEVPost.load_post_online(id=post["id"])
+            else:
+                dev_post = DEVPost()
+                dev_post.load_json(post=post)
+            dev_post.save_md()
             posts_new.append(json.dumps(post_meta))
 
         post_meta_list.extend(posts_new)
@@ -287,7 +312,7 @@ def load_posts():
             posts = json.load(f)
             for post_meta in posts:
                 post_meta_list.append(json.dumps(post_meta))
-                posts_list.append(DEVPost.load_post(**post_meta))
+                posts_list.append(DEVPost.load_post_local(**post_meta))
 
 
 def publish_my_posts():
@@ -337,7 +362,7 @@ def update_my_post(post_id: int):
     """
     Update the post
     """
-    post = DEVPost.load_post(id=post_id)
+    post = DEVPost.load_post_local(id=post_id)
     post.update()
     # pull_my_posts()
 
