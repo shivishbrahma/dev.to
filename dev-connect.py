@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import urllib.parse
 from dotenv import load_dotenv
 import dateutil.parser
@@ -23,7 +23,9 @@ def null_if(value, def_val):
 
 
 class DEVPost:
-    """ """
+    """
+    DEV Post class
+    """
 
     def __init__(self, **kwargs) -> None:
         self.__id: int = -1
@@ -32,10 +34,13 @@ class DEVPost:
         self.__cover_img: str = ""
         self.__is_published: bool = False
         self.__is_updated: bool = False
-        self.__published_ts: datetime = datetime.now()
+        self.__published_ts: datetime = datetime.datetime.now(tz=datetime.timezone.utc)
         self.__slug: str = "post-slug"
         self.__body: str = "Body Content"
         self.__tags: list = []
+        self.__series = None
+        self.__created_ts = None
+        self.__edited_ts = None
 
         post_def = {
             "id": -1,
@@ -43,10 +48,11 @@ class DEVPost:
             "description": "Body Content...",
             "cover_image": "",
             "published": False,
-            "published_at": datetime.utcnow(),
+            "published_at": datetime.datetime.now(tz=datetime.timezone.utc),
             "slug": "post-slug",
             "body_markdown": "Body Content",
             "tag_list": [],
+            "series": None,
         }
 
         for key, val in kwargs.items():
@@ -60,6 +66,7 @@ class DEVPost:
                 "slug",
                 "body_markdown",
                 "tag_list",
+                "series",
             ]:
                 post_def[key] = val
         self.load_json(post_def)
@@ -94,9 +101,14 @@ class DEVPost:
         self.__desc = post["description"]
         self.__cover_img = post["cover_image"]
         self.__is_published = null_if(post["published"], False)
-        # self.__is_updated = null_if(post["updated"], False)
         if post["published_at"] is not None:
             self.__published_ts = dateutil.parser.parse(str(post["published_at"]))
+        if "series" in post.keys() and post["series"] is not None:
+            self.__series = post["series"]
+        if "created_at" in post.keys() and post["created_at"] is not None:
+            self.__created_ts = dateutil.parser.parse(str(post["created_at"]))
+        if "edited_at" in post.keys() and post["edited_at"] is not None:
+            self.__edited_ts = dateutil.parser.parse(str(post["edited_at"]))
         self.__slug = post["slug"]
         self.__tags = post["tag_list"]
         self.__body = post["body_markdown"]
@@ -112,7 +124,6 @@ class DEVPost:
             self.__desc = post_yml["description"]
             self.__cover_img = post_yml["cover_image"]
             self.__is_published = null_if(post_yml["published"], False)
-            # self.__is_updated = null_if(post_yml["updated"], False)
             self.__published_ts = post_yml["published_at"]
             self.__slug = post_yml["slug"]
             self.__tags = post_yml["tag_list"]
@@ -126,17 +137,24 @@ class DEVPost:
                 os.path.join(dir, self.__slug) + ".md", "w+", encoding="utf-8"
             ) as f:
                 f.write("---\n")
+                yaml_data = {
+                    "id": self.__id,
+                    "title": self.__title,
+                    "published": self.__is_published,
+                    "published_at": self.__published_ts,
+                    "description": self.__desc,
+                    "tag_list": self.__tags,
+                    "cover_image": self.__cover_img,
+                    "slug": self.__slug,
+                }
+                if self.__series is not None:
+                    yaml_data["series"] = self.__series
+                if self.__created_ts is not None:
+                    yaml_data["created_at"] = self.__created_ts
+                if self.__edited_ts is not None:
+                    yaml_data["edited_at"] = self.__edited_ts
                 yaml.dump(
-                    {
-                        "id": self.__id,
-                        "title": self.__title,
-                        "published": self.__is_published,
-                        "published_at": self.__published_ts,
-                        "description": self.__desc,
-                        "tag_list": self.__tags,
-                        "cover_image": self.__cover_img,
-                        "slug": self.__slug,
-                    },
+                    yaml_data,
                     f,
                     indent=4,
                 )
@@ -158,6 +176,7 @@ class DEVPost:
                 "published": self.__is_published,
                 "published_at": str(self.__published_ts),
                 "cover_image": self.__cover_img,
+                "body": self.__body[:100] + "...",
             },
             indent=4,
         )
@@ -183,13 +202,46 @@ class DEVPost:
             logger.error("Article is not published! Try with different article")
         return True
 
+    def update(self) -> bool:
+        url = urllib.parse.urljoin(API_URL, f"/api/articles/{self.__id}")
+        data = {
+            "article": {
+                "title": self.__title,
+                "body_markdown": self.__body,
+                "published": self.__is_published,
+                "tags": ", ".join(self.__tags) if len(self.__tags) > 0 else "",
+            }
+        }
+        logger.debug(data)
+        res = requests.put(url=url, headers=headers, json=data)
+        if res.status_code == 200:
+            logger.info("Article successfully updated!")
+            return True
+        else:
+            logger.error(f"Error updating article: {res.json()}")
+            return False
+
     @staticmethod
-    def load_post(id, filename):
-        return DEVPost()
+    def load_post(id, filename=None):
+        md_filename = filename
+        if filename is None:
+            with open(POSTS_METADATA, "r", encoding="utf-8") as f:
+                posts = json.load(f)
+                post = list(filter(lambda post: post["id"] == id, posts))
+                if len(post) > 0:
+                    md_filename = post[0]["filename"]
+
+        post = DEVPost()
+        post.load_md(
+            open(os.path.join(CONTENT_DIR, md_filename), "r", encoding="utf-8").read()
+        )
+        return post
 
 
 def pull_my_posts():
-    """ """
+    """
+    Pull all my posts from dev.to
+    """
     url = urllib.parse.urljoin(API_URL, "/api/articles/me/all")
     res = requests.get(url, headers=headers)
     post_meta_list = []
@@ -239,9 +291,9 @@ def load_posts():
 
 
 def publish_my_posts():
-    """ """
+    """"""
     md_posts = []
-    for md_file in list(glob.glob(os.path.join("content", "*.md"))):
+    for md_file in list(glob.glob(os.path.join(CONTENT_DIR, "*.md"))):
         with open(md_file, "r", encoding="utf-8") as f:
             dev_post = DEVPost()
             dev_post.load_md(f.read())
@@ -273,11 +325,20 @@ def publish_my_post(post: DEVPost):
         logger.error(f"Error publishing Article: {res.json()}")
 
 
-def create_new_post(title):
+def create_new_post(title: str):
     """
     Create a new post template
     """
     publish_my_post(DEVPost(title=title))
+    # pull_my_posts()
+
+
+def update_my_post(post_id: int):
+    """
+    Update the post
+    """
+    post = DEVPost.load_post(id=post_id)
+    post.update()
     # pull_my_posts()
 
 
@@ -286,8 +347,8 @@ def main():
     arg_parser.add_argument(
         "--create", "-c", type=str, help="Create a new post template"
     )
+    arg_parser.add_argument("--update", "-u", type=int, help="Update the post by id")
     arg_parser.add_argument("--pull", action="store_true", help="Pull posts")
-    arg_parser.add_argument("--update", action="store_true", help="Update the post")
 
     args = arg_parser.parse_args()
 
@@ -298,16 +359,21 @@ def main():
     if args.pull:
         pull_my_posts()
 
+    if args.update:
+        update_my_post(args.update)
+
     # publish_my_posts()
 
 
 if __name__ == "__main__":
     API_URL = "https://dev.to/"
     POSTS_METADATA = "posts.json"
+    CONTENT_DIR = "content"
 
     headers = {
         "api-key": os.environ.get("DEV_TO_API_KEY"),
         "Content-Type": "application/json",
+        "Accept": "application/vnd.forem.api-v1+json",
     }
 
     logger = logging.getLogger("dev_connect")
