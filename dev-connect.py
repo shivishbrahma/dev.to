@@ -12,6 +12,8 @@ import re
 import logging
 import coloredlogs
 from argparse import ArgumentParser
+from strip_markdown import strip_markdown
+import string
 
 load_dotenv()
 
@@ -204,14 +206,32 @@ class DEVPost:
             logger.error("Article is not published! Try with different article")
         return True
 
+    def generate_description(self) -> str:
+        """
+        Convert markdown into simple text and return first 100 characters such that last word is complete
+        """
+        markdown_text = strip_markdown(self.__body)
+        if len(markdown_text) > 100:
+            i = 100
+            while i > len(markdown_text) or markdown_text[i] not in string.whitespace:
+                i += 1
+            markdown_text = markdown_text[:i] + "..."
+
+        return markdown_text
+
     def update(self) -> bool:
         url = urllib.parse.urljoin(API_URL, f"/api/articles/{self.__id}")
         data = {
             "article": {
                 "title": self.__title,
                 "body_markdown": self.__body,
+                "description": self.generate_description(),
                 "published": self.__is_published,
-                "tags": ", ".join(self.__tags) if len(self.__tags) > 0 else "",
+                "tags": (
+                    ", ".join(self.__tags)
+                    if self.__tags is None or len(self.__tags) > 0
+                    else ""
+                ),
             }
         }
         logger.debug(data)
