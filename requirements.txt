@@ -3,3 +3,4 @@ PyYAML
 python-dotenv
 coloredlogs
 python-dateutil
+strip_markdown
