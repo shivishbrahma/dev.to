@@ -1,16 +1,15 @@
 ---
 cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F5kybkw3w9lqa1khc0a1p.png
+created_at: 2022-03-22 16:30:41+00:00
 description: A ToDo App is a very beginner level app for any frontend developer. A
     basic ToDo app has...
+edited_at: 2022-03-22 18:39:01+00:00
 id: 1031023
 published: true
-published_at: 2022-03-22 16:30:41.841000+00:00
+published_at: 2022-03-22 16:30:41+00:00
+series: 17415
 slug: building-a-todo-app-in-react-51c8
-tag_list:
-- javascript
-- react
-- webdev
-- tutorial
+tag_list: javascript, react, webdev, tutorial
 title: Building a ToDo App in React
 ---
 A ToDo App is a very beginner level app for any frontend developer. A basic ToDo app has functionality of adding, deleting and updating the todos from the list. Being a developer, we easily tend to forget the tasks for the day or a span of time. It's always advisable to have such an app where we can add or delete or modify todos.

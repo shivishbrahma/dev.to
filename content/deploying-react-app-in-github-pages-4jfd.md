@@ -1,15 +1,14 @@
 ---
 cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F0mqmsf3owvhv3fea72wf.png
+created_at: 2022-03-06 07:33:46+00:00
 description: Developing a React App has always been a fascinating experience as a
     Frontend Developer. To build...
+edited_at: 2024-07-21 19:15:30+00:00
 id: 1012218
 published: true
-published_at: 2022-03-06 07:33:46.411000+00:00
+published_at: 2022-03-06 07:33:46+00:00
 slug: deploying-react-app-in-github-pages-4jfd
-tag_list:
-- github
-- react
-- deployment
+tag_list: github, react, deployment
 title: Deploying React App in GitHub Pages
 ---
 Developing a React App has always been a fascinating experience as a Frontend Developer. To build exotic components and embed them in our websites that we develop as a part of job or hobby, is an adventure in itself. When the time comes to share with friends and family, nothing is best than to host it over a website. There are quite a lot of options for free hosting, but for an open-source developer, Github Pages has separate place. In this article, we will try to learn to deploy an React App in Github Pages.
