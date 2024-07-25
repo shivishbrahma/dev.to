@@ -210,7 +210,7 @@ class DEVPost:
         """
         Convert markdown into simple text and return first 100 characters such that last word is complete
         """
-        markdown_text = strip_markdown(self.__body)
+        markdown_text = strip_markdown(self.__body).replace("\n", " ")
         if len(markdown_text) > 100:
             i = 100
             while i > len(markdown_text) or markdown_text[i] not in string.whitespace:
@@ -280,7 +280,7 @@ class DEVPost:
             return None
 
 
-def pull_my_posts():
+def pull_my_posts(id=None):
     """
     Pull all my posts from dev.to
     """
@@ -384,8 +384,14 @@ def update_my_post(post_id: int):
     """
     post = DEVPost.load_post_local(id=post_id)
     post.update()
-    # pull_my_posts()
+    pull_my_posts(id=post_id)
 
+def show_my_post(post_id: int):
+    """
+    Show the post
+    """
+    post = DEVPost.load_post_local(id=post_id)
+    print(post)
 
 def main():
     arg_parser = ArgumentParser()
@@ -394,6 +400,7 @@ def main():
     )
     arg_parser.add_argument("--update", "-u", type=int, help="Update the post by id")
     arg_parser.add_argument("--pull", action="store_true", help="Pull posts")
+    arg_parser.add_argument("--show", "-s", type=int, help="Show posts")
 
     args = arg_parser.parse_args()
 
@@ -406,6 +413,9 @@ def main():
 
     if args.update:
         update_my_post(args.update)
+
+    if args.show:
+        show_my_post(args.show)
 
     # publish_my_posts()
 
