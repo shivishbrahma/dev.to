@@ -53,7 +53,7 @@ class DEVPost:
             "published_at": None,
             "slug": "post-slug",
             "body_markdown": "Body Content",
-            "tag_list": [],
+            "tags": [],
             "series": None,
         }
 
@@ -67,7 +67,7 @@ class DEVPost:
                 "published_at",
                 "slug",
                 "body_markdown",
-                "tag_list",
+                "tags",
                 "series",
             ]:
                 post_def[key] = val
@@ -114,7 +114,7 @@ class DEVPost:
         if "edited_at" in post.keys() and post["edited_at"] is not None:
             self.__edited_ts = dateutil.parser.parse(str(post["edited_at"]))
         self.__slug = post["slug"]
-        self.__tags = post["tag_list"]
+        self.__tags =  post["tags"]
         self.__body = post["body_markdown"]
 
     def load_md(self, post: str):
@@ -130,7 +130,11 @@ class DEVPost:
             self.__is_published = null_if(post_yml["published"], False)
             self.__published_ts = post_yml["published_at"]
             self.__slug = post_yml["slug"]
-            self.__tags = post_yml["tag_list"]
+            self.__tags = (
+                post_yml["tags"].split(",")
+                if isinstance(post_yml["tags"], list)
+                else post_yml["tags"]
+            )
         if len(md_content) > 0:
             self.__body = md_content[0].strip()
         # logger.debug(self.__body)
@@ -146,7 +150,7 @@ class DEVPost:
                     "published": self.__is_published,
                     "published_at": self.__published_ts,
                     "description": self.__desc,
-                    "tag_list": self.__tags,
+                    "tags": self.__tags,
                     "cover_image": self.__cover_img,
                     "slug": self.__slug,
                 }
@@ -228,7 +232,7 @@ class DEVPost:
                 "description": self.generate_description(),
                 "published": self.__is_published,
                 "tags": (
-                    ", ".join(self.__tags)
+                    ",".join(self.__tags)
                     if self.__tags is None or len(self.__tags) > 0
                     else ""
                 ),
@@ -238,6 +242,9 @@ class DEVPost:
         res = requests.put(url=url, headers=headers, json=data)
         if res.status_code == 200:
             logger.info("Article successfully updated!")
+            post = res.json()
+            self.load_json(post)
+            self.save_md()
             return True
         else:
             logger.error(f"Error updating article: {res.json()}")
@@ -374,7 +381,7 @@ def create_new_post(title: str):
     """
     Create a new post template
     """
-    publish_my_post(DEVPost(title=title))
+    publish_my_post(DEVPost(title=title, published=False))
     # pull_my_posts()
 
 
@@ -384,7 +391,7 @@ def update_my_post(post_id: int):
     """
     post = DEVPost.load_post_local(id=post_id)
     post.update()
-    pull_my_posts(id=post_id)
+
 
 def show_my_post(post_id: int):
     """
@@ -392,6 +399,7 @@ def show_my_post(post_id: int):
     """
     post = DEVPost.load_post_local(id=post_id)
     print(post)
+
 
 def main():
     arg_parser = ArgumentParser()
