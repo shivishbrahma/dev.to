@@ -9,7 +9,11 @@ published: true
 published_at: 2022-02-27 07:48:23+00:00
 series: 17308
 slug: designing-an-activity-calendar-in-react-47k2
-tags: javascript, react, component, github
+tags:
+- javascript
+- react
+- component
+- github
 title: Designing an Activity Calendar in React
 ---
 Activity Calendar has become popular after open-source platforms like Github, Kaggle starting used to show contributions data in this format. As a developer, people often tries to analyse what are the days I am productive the most. The measure might be a quantitative and not qualitative, but it gives a clear picture overall. We gonna build an Activity Calendar Component today in React from Scratch.

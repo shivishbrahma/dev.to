@@ -102,6 +102,10 @@ class DEVPost:
         self.__title = post["title"]
         self.__desc = post["description"]
         self.__cover_img = post["cover_image"]
+        if "published_timestamp" in post.keys() and "published" not in post.keys():
+            post["published"] = post["published_timestamp"] is not None and post[
+                "published_timestamp"
+            ] not in ["null", ""]
         self.__is_published = null_if(post["published"], False)
         if post["published_at"] is not None:
             self.__published_ts = dateutil.parser.parse(str(post["published_at"]))
@@ -114,7 +118,16 @@ class DEVPost:
         if "edited_at" in post.keys() and post["edited_at"] is not None:
             self.__edited_ts = dateutil.parser.parse(str(post["edited_at"]))
         self.__slug = post["slug"]
-        self.__tags =  post["tags"]
+        if (
+            "tags" not in post.keys()
+            and post["tags"] is not None
+            and "tag_list" in post.keys()
+        ):
+            if isinstance(post["tag_list"], list):
+                post["tags"] = post["tag_list"]
+            elif isinstance(post["tag_list"], str):
+                post["tags"] = post["tag_list"].split(", ")
+        self.__tags = post["tags"]
         self.__body = post["body_markdown"]
 
     def load_md(self, post: str):
@@ -132,7 +145,7 @@ class DEVPost:
             self.__slug = post_yml["slug"]
             self.__tags = (
                 post_yml["tags"].split(",")
-                if isinstance(post_yml["tags"], list)
+                if isinstance(post_yml["tags"], str)
                 else post_yml["tags"]
             )
         if len(md_content) > 0:
@@ -231,11 +244,7 @@ class DEVPost:
                 "body_markdown": self.__body,
                 "description": self.generate_description(),
                 "published": self.__is_published,
-                "tags": (
-                    ",".join(self.__tags)
-                    if self.__tags is None or len(self.__tags) > 0
-                    else ""
-                ),
+                "tags": self.__tags,
             }
         }
         logger.debug(data)

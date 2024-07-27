@@ -9,7 +9,10 @@ published: true
 published_at: 2022-02-18 19:30:57+00:00
 series: 17308
 slug: designing-a-typewriter-react-component-3kea
-tags: react, javascript, component
+tags:
+- react
+- javascript
+- component
 title: Designing a Typewriter React Component
 ---
 We are pretty much familiar with the Typewriter effect, although we might not be acquainted with a Typewriter. In words, the typewriter effect is the gradual revealing of the words as if it is being typed infront of our eyes with sound of a typewriter key pressing. A popular Typewriter Animation in Web usually involves slowling revealing of the text with a blinking cursor and slowling erasing of the text with a pause.

@@ -3,12 +3,16 @@ cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,
 created_at: 2022-04-03 19:15:09+00:00
 description: From the list of some of the most common libraries that are heavily used
     in a PHP framework project...
-edited_at: 2022-04-10 07:03:55+00:00
+edited_at: 2024-07-27 18:25:03+00:00
 id: 1043472
 published: true
 published_at: 2022-04-10 06:46:27+00:00
 slug: creating-a-dotenv-loader-in-php-jkl
-tags: php, symfony, phpunit, backend
+tags:
+- react
+- javascript
+- webdev
+- component
 title: Creating a DotEnv Loader in PHP
 ---
 From the list of some of the most common libraries that are heavily used in a PHP framework project is DotEnv. The package that is used to load .env variables into the program from .env file. These env values are usually secrets patched for each environment and there is a subtle security issue in the process.
