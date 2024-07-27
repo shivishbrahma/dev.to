@@ -9,7 +9,7 @@ published: true
 published_at: 2022-03-14 18:36:08+00:00
 series: 17308
 slug: designing-a-markdown-editor-in-react-7cb
-tag_list: javascript, webdev, markdown, component
+tags: javascript, webdev, markdown, component
 title: Designing a Markdown Editor in React
 ---
 Ever since the popularity of open-source libraries, Markdown has always been the primary text format for documentation of these libraries after txt. Since Markdown supports word processing like formatting along with text like script, it is more readable and can easily formatted to a HTML script for web rendering. By the recent updates, Github has standardised many other formatting syntaxes to  support more HTML like features into markdown.
