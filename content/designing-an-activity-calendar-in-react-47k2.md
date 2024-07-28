@@ -3,7 +3,7 @@ cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,
 created_at: 2022-02-27 07:48:23+00:00
 description: Activity Calendar has become popular after open-source platforms like
     Github, Kaggle starting used to...
-edited_at: 2024-06-16 04:19:42+00:00
+edited_at: 2024-07-28 05:01:23+00:00
 id: 1002962
 published: true
 published_at: 2022-02-27 07:48:23+00:00
@@ -717,6 +717,10 @@ The function *renderFooter* renders the footer with total no of contributions an
 
 <https://github.com/shivishbrahma/nuclear-reactor/blob/main/src/ActivityCalendar/utils.js>
 
+**styles.module.css**
+
+<https://github.com/shivishbrahma/nuclear-reactor/blob/main/src/ActivityCalendar/styles.module.css>
+
 ## Use within App component
 
 ```jsx
@@ -754,15 +758,10 @@ function App() {
 export default App;
 ```
 
-
-
 ## Preview
 
 ![Preview of Activity Calendar Component](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/anyjk26q63at2ej1spsi.png)
 
-
-
-
 ## Reference
 
--   [React Activity Calendar](https://www.npmjs.com/package/react-activity-calendar)
+- [React Activity Calendar](https://www.npmjs.com/package/react-activity-calendar)

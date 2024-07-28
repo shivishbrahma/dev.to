@@ -122,4 +122,3 @@ There is a custom workflow for github-pages deployment that is also available in
 
 - [Github actions/checkout](https://github.com/actions/checkout)
 - [Github actions/setup-node](https://github.com/actions/setup-node)![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vyg1bd0k2qgaat5suhz2.png)
- 

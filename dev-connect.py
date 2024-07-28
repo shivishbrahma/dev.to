@@ -118,17 +118,15 @@ class DEVPost:
         if "edited_at" in post.keys() and post["edited_at"] is not None:
             self.__edited_ts = dateutil.parser.parse(str(post["edited_at"]))
         self.__slug = post["slug"]
-        if (
-            "tags" not in post.keys()
-            and post["tags"] is not None
-            and "tag_list" in post.keys()
+        if "tag_list" in post.keys() and (
+            "tags" not in post.keys() or post["tags"] is not None
         ):
             if isinstance(post["tag_list"], list):
                 post["tags"] = post["tag_list"]
             elif isinstance(post["tag_list"], str):
                 post["tags"] = post["tag_list"].split(", ")
         self.__tags = post["tags"]
-        self.__body = post["body_markdown"]
+        self.__body = post["body_markdown"].strip()
 
     def load_md(self, post: str):
         yml_content = re.findall("---([\\s\\S]+)---", post)
@@ -180,6 +178,7 @@ class DEVPost:
                 )
                 f.write("---\n")
                 f.write(self.__body)
+                f.write("\n")
                 logger.info(f"Article successfully saved to {file_path}!")
             return True
         except Exception as e:
@@ -247,7 +246,7 @@ class DEVPost:
                 "tags": self.__tags,
             }
         }
-        logger.debug(data)
+        # logger.debug(data)
         res = requests.put(url=url, headers=headers, json=data)
         if res.status_code == 200:
             logger.info("Article successfully updated!")
