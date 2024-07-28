@@ -1,9 +1,9 @@
 ---
-cover_image: null
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fhsostoqsrl16ixfm4lss.png
 created_at: 2024-07-27 17:25:05+00:00
 description: In today's digital age, ensuring secure access to online services is
     paramount, and One-Time...
-edited_at: 2024-07-28 07:14:07+00:00
+edited_at: 2024-07-28 07:24:46+00:00
 id: 1938435
 published: true
 published_at: 2024-07-27 17:25:05+00:00

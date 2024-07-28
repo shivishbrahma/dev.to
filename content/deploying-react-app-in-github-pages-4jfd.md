@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F0mqmsf3owvhv3fea72wf.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Funbzpmp5z1lb1f8pfuld.png
 created_at: 2022-03-06 07:33:46+00:00
 description: Developing a React App has always been a fascinating experience as a
     Frontend Developer. To build...
-edited_at: 2024-07-21 19:15:30+00:00
+edited_at: 2024-07-28 08:13:58+00:00
 id: 1012218
 published: true
 published_at: 2022-03-06 07:33:46+00:00

@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fk0euxhlzn6tr5ri7gfgv.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Femrp8zknfwuerg2mrmm3.png
 created_at: 2022-02-18 15:04:48+00:00
 description: We are pretty much familiar with the Typewriter effect, although we might
     not be acquainted with a...
-edited_at: 2024-07-21 19:34:47+00:00
+edited_at: 2024-07-28 08:12:23+00:00
 id: 993602
 published: true
 published_at: 2022-02-18 19:30:57+00:00

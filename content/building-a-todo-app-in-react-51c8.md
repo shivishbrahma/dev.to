@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F5kybkw3w9lqa1khc0a1p.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fm055ukww2jp9hsml5jd1.png
 created_at: 2022-03-22 16:30:41+00:00
 description: A ToDo App is a very beginner level app for any frontend developer. A
     basic ToDo app has...
-edited_at: 2022-03-22 18:39:01+00:00
+edited_at: 2024-07-28 10:17:50+00:00
 id: 1031023
 published: true
 published_at: 2022-03-22 16:30:41+00:00

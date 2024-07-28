@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fkt7jmjn0lxpbfp867imd.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8qf65ftalb0mmpw6ya1p.png
 created_at: 2022-03-14 18:15:59+00:00
 description: Ever since the popularity of open-source libraries, Markdown has always
     been the primary text format...
-edited_at: 2022-04-09 13:36:47+00:00
+edited_at: 2024-07-28 09:50:24+00:00
 id: 1022617
 published: true
 published_at: 2022-03-14 18:36:08+00:00
@@ -244,7 +244,7 @@ Having two states editorMaximized and previewMaximized, for toggling of the edit
 
 ## Preview
 
-![Markdown Editor Preview](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mez0xskwqmhcvy48fukq.png)
+![Markdown Editor Preview](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3mj2asxx10l0j7kgj224.png)
 
 ## Reference
 

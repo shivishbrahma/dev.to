@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fvptsqyr0ivfbzur7375s.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F3uv06i9n1axbshuc015z.png
 created_at: 2022-02-27 07:48:23+00:00
 description: Activity Calendar has become popular after open-source platforms like
     Github, Kaggle starting used to...
-edited_at: 2024-07-28 05:01:23+00:00
+edited_at: 2024-07-28 09:33:17+00:00
 id: 1002962
 published: true
 published_at: 2022-02-27 07:48:23+00:00

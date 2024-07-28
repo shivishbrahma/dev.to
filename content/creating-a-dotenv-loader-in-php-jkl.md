@@ -1,9 +1,9 @@
 ---
-cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fg4vrvcah3t86ib1s8r2h.png
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fxn10i6fkqp9b73lfplwg.png
 created_at: 2022-04-03 19:15:09+00:00
 description: From the list of some of the most common libraries that are heavily used
     in a PHP framework project...
-edited_at: 2024-07-27 18:52:00+00:00
+edited_at: 2024-07-28 10:28:16+00:00
 id: 1043472
 published: true
 published_at: 2022-04-10 06:46:27+00:00
