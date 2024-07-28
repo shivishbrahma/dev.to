@@ -3,10 +3,11 @@ cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,
 created_at: 2024-07-27 17:25:05+00:00
 description: In today's digital age, ensuring secure access to online services is
     paramount, and One-Time...
-edited_at: 2024-07-28 07:24:46+00:00
+edited_at: 2024-07-28 13:10:37+00:00
 id: 1938435
 published: true
 published_at: 2024-07-27 17:25:05+00:00
+series: 17308
 slug: building-a-seamless-otp-input-field-in-react-51pd
 tags:
 - react
