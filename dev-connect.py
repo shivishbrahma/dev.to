@@ -415,7 +415,7 @@ def main():
         "--create", "-c", type=str, help="Create a new post template"
     )
     arg_parser.add_argument("--update", "-u", type=int, help="Update the post by id")
-    arg_parser.add_argument("--pull", action="store_true", help="Pull posts")
+    arg_parser.add_argument("--pull", "-p", action="store_true", help="Pull posts")
     arg_parser.add_argument("--show", "-s", type=int, help="Show posts")
 
     args = arg_parser.parse_args()
