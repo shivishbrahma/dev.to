@@ -1,11 +1,11 @@
 ---
-cover_image: null
+cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fm52zorn1uiwo74k84rx7.png
 created_at: 2024-08-01 17:31:43+00:00
 description: Deploying a Vue application can be a tedious and error-prone process,
     especially when done manually....
 edited_at: 2024-08-02 04:54:50+00:00
 id: 1944047
-published: false
+published: true
 published_at: 2024-08-01 17:31:43+00:00
 slug: automate-your-vue-deployment-a-step-by-step-guide-to-using-github-actions-44oa
 tags:
