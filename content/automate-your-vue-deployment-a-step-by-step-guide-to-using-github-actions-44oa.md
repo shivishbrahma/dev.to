@@ -3,7 +3,7 @@ cover_image: https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,
 created_at: 2024-08-01 17:31:43+00:00
 description: Deploying a Vue application can be a tedious and error-prone process,
     especially when done manually....
-edited_at: 2024-08-02 04:54:50+00:00
+edited_at: 2024-08-04 05:58:04+00:00
 id: 1944047
 published: true
 published_at: 2024-08-01 17:31:43+00:00
@@ -102,13 +102,54 @@ The url for the site is available in the same page as visible above.
 
 There is a custom workflow for github-pages deployment that is also available in **Actions** tab.
 
+### Fixing subdirectory hosting
+
+The subdirectory is not supported by github pages by default. We have to configure the `homepage` in our `package.json` and configure `vue.config.js` to use the subdirectory url.
+
+For example, in the given instance, our url is `https://shivishbrahma.github.io/kodakriti/`. So our `homepage` should be `https://shivishbrahma.github.io/kodakriti/` and the config looks something like below:
+
+```json
+{
+...
+"browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+],
+"homepage": "https://shivishbrahma.github.io/vue-tools/",
+"description": "Web Tools built in Vue",
+"keywords": [
+    "portfolio",
+    "web-tools",
+    "vue3"
+],
+...
+}
+```
+
+For `vue.config.js` file, use the below code:
+
+```js
+const { defineConfig } = require("@vue/cli-service");
+
+module.exports = defineConfig({
+    transpileDependencies: true,
+    publicPath: (process.env.NODE_ENV === "production") ? "/kodakriti/" : "/"
+});
+```
+
+Now the `/kodakriti` will be the relative url to the subdirectory, customise accordingly.
+
 ## FAQs
 
 1. Why using multiple versions for node-setup?
-    Ans: We are using 18.x and 20.x node versions, because there might be some new or old packages that won't be compiled in one of the 2. But it is advisable to use the node version that you are using in the local setup.
-2. What are the possible reasons for failing react compilation in Github Workflow?
-    Ans: Here a list of reasons where react compilation might fail:
-    - If there are depreciation warnings or any other react warnings showing in terminal after `npm start` in local.
+
+    *Ans:* We are using 18.x and 20.x node versions, because there might be some new or old packages that won't be compiled in one of the 2. But it is advisable to use the node version that you are using in the local setup.
+2. What are the possible reasons for failing vue compilation in Github Workflow?
+
+    *Ans:* Here a list of reasons where vue compilation might fail:
+    - If there are depreciation warnings or any other vue or eslint warnings showing in terminal after `npm run serve` in local.
     - If you miss to create the same branch name mentioned as trigger on push or pull_request.
     - If the node packages being used doesn't support node versions mentioned in the node versions array.
 
